@@ -31,7 +31,6 @@ public class _0004 {
 class Solution4 {
 	
 	public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-		Number
 		return solution1(nums1, nums2);
 	}
 	
