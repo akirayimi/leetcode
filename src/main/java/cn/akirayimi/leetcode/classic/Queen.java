@@ -31,28 +31,23 @@ public class Queen {
 			solve++;
 			System.out.println("找到第" + solve + "种解法：");
 			printBoard();
-			cleanBoard();
+			clearRow(rowNum - 1);
 			return;
 		}
+   		int firstQueenColIndex = getQueenCol(rowNum);
 		
+		clearRow(rowNum);
 		//本行可以放置
-		System.out.println("尝试在第" + (rowNum + 1) + "行寻找可以放置的位置...");
-		for (int i = 0; i < row; i++){
+		for (int i = firstQueenColIndex + 1; i < row; i++){
 			if (valid(board, rowNum, i)){
-				System.out.println("第" + (rowNum + 1) + "行可以放置：放在 " + (i + 1) + ".");
 				board[rowNum][i] = 1; //放置
 				put(rowNum+1);
-				return;
 			}
 		}
-		//本行无可放置位置：
-		System.out.println("第" + (rowNum + 1) + "行无法放置，将返回上一行。");
-		System.out.println("此时棋盘如下：");
-		printBoard();
-		int LastRowQueenColIndex = getQueenCol(rowNum - 1);
-		System.out.println("上一行的皇后位置：" + (rowNum + 1 - 1)  + "#" + (LastRowQueenColIndex + 1));
-		clearRow(rowNum - 1);
-		System.out.println("清除" + rowNum + "行数据");
+		if (rowNum == 0){
+			System.out.println("一共找到" + solve + "种解法。");
+			System.exit(0);
+		}
 		put(rowNum-1);
 	}
 	
@@ -86,14 +81,6 @@ public class Queen {
 		System.out.println("#################");
 	}
 
-	private void cleanBoard(){
-		for (int i = 0; i < row; i++){
-			for (int j = 0; j < row; j++){
-				board[i][j] = 0;
-			}
-		}
-	}
-	
 	private boolean valid(int[][] cheess, int rowNum, int colNum) {
 		// 由于规则是每行每行放置，所以不用检查行冲突了。
 		// 列冲突
@@ -105,7 +92,7 @@ public class Queen {
 		for (int i = 0; i < rowNum; i++){
 			for (int j = 0; j < this.row; j++){
 				if (cheess[i][j] == 1){
-					if ((rowNum - i) == (colNum - j)){
+					if (Math.abs((rowNum - i)) == Math.abs((colNum - j)) ){
 						return false;
 					}
 					break;
