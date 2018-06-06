@@ -49,31 +49,31 @@ class Solution3 {
 	        return Math.max(tempMax, map.keySet().size());
 	}
 	
+	
 	/**
-	 * sliding window
+	 * sliding window 
 	 * @param s
 	 * @return
 	 */
-	public int solution2(String s){
-		int i = 0, j = 0, max = 0;
+	public int solution3(String s){
+		int i = 0, j = 0, maxLen = 0;
 		Set<Character> set = new HashSet<Character>();
-		for (; i < s.length(); i++){
-			for (j = i; j < s.length(); j++){
-				char cur = s.charAt(j);
-				
-				if (set.contains(cur)){
-					max = Math.max(max, set.size());
-					set.clear();
-					break;
-				}
-				set.add(cur);
+		while (i < s.length() && j < s.length()){
+			char c = s.charAt(j);
+			if (set.contains(c)){ //如果有重复的，不用重置j，观察的对象始终为set
+				set.remove(s.charAt(i));
+				i++;
+			} else {
+				set.add(c);
+				maxLen = Math.max(maxLen, set.size());
+				j++;
 			}
 		}
-		return Math.max(max, set.size());
+		return maxLen;
 	}
 	
     public int lengthOfLongestSubstring(String s) {
-       return solution2(s);
+       return solution3(s);
     }
 
 }
