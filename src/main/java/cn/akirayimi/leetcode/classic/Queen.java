@@ -47,8 +47,9 @@ public class Queen {
 		if (rowNum == 0){
 			System.out.println("一共找到" + solve + "种解法。");
 			System.exit(0);
+		} else {
+			put(rowNum-1);
 		}
-		put(rowNum-1);
 	}
 	
 	private void clearRow(int rowNum) {
